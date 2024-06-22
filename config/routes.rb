@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'spots/new'
   get 'spots' => 'spots#index'
-  get 'spots/show'
+  get 'spots/:id' => 'spots#show', as: 'spot'
   get 'spots/edit'
   post 'spots' => 'spots#create'
   get '/top' => 'homes#top'

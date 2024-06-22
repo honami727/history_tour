@@ -6,6 +6,6 @@
   <span><%= spot.person %></span>
 
   <p>タイトル</p>
-  <span><%= spot.title %></span>
+  <span><%= link_to spot.title, spot_path(spot.id) %></span>
 
 <% end %>

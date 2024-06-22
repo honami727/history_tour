@@ -6,7 +6,7 @@ class SpotsController < ApplicationController
   def create
     spot = Spot.new(spot_params)
     spot.save
-    redirect_to '/top'
+    redirect_to spot_path(spot.id)
   end
 
   def index
@@ -14,6 +14,7 @@ class SpotsController < ApplicationController
   end
 
   def show
+    @spot = Spot.find(params[:id])
   end
 
   def edit
