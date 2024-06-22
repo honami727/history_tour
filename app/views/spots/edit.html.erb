@@ -1,2 +1,16 @@
-<h1>Spots#edit</h1>
-<p>Find me in app/views/spots/edit.html.erb</p>
+<h1>投稿編集</h1>
+
+<%= form_with model: @spot, url: update_spot_path(@spot.id), method: :patch do |f| %>
+
+  <h4>人物</h4>
+  <%= f.text_field :person %>
+  
+  <h4>タイトル</h4>
+  <%= f.text_field :title %>
+  
+  <h4>本文</h4>
+  <%= f.text_area :body %>
+  
+  <%= f.submit '保存' %>
+  
+<% end %>
