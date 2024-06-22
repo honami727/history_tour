@@ -1,5 +1,14 @@
 <h1>新規投稿</h1>
 
+<% if @spot.errors.any? %>
+  <%= @spot.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @spot.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_with model: @spot, url: '/spots', method: :post do |f| %>
 
   <h4>人物</h4>

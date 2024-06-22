@@ -4,9 +4,12 @@ class SpotsController < ApplicationController
   end
   
   def create
-    spot = Spot.new(spot_params)
-    spot.save
-    redirect_to spot_path(spot.id)
+    @spot = Spot.new(spot_params)
+    if @spot.save
+      redirect_to spot_path(@spot.id)
+    else
+      render :new
+    end
   end
 
   def index
