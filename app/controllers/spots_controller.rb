@@ -6,8 +6,10 @@ class SpotsController < ApplicationController
   def create
     @spot = Spot.new(spot_params)
     if @spot.save
+      flash[:notice] = "投稿に成功しました!"
       redirect_to spot_path(@spot.id)
     else
+      flash.now[:notice] = "投稿に失敗しました"
       render :new
     end
   end
@@ -39,7 +41,7 @@ class SpotsController < ApplicationController
   private
   
   def spot_params
-    params.require(:spot).permit(:person, :title, :body)
+    params.require(:spot).permit(:person, :address, :title, :body)
   end
   
 end
