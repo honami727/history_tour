@@ -10,6 +10,7 @@ class SpotsController < ApplicationController
   end
 
   def index
+    @spots = Spot.all
   end
 
   def show
