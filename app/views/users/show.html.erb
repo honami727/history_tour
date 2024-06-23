@@ -16,6 +16,8 @@
     <p>場所:<%= spot.address %></p>
     
     <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
+    
+    <p><%= link_to "#{spot.post_comments.count} コメント", spot_path(spot.id) %></p>
 </div>
 
 <% end %>

@@ -20,3 +20,21 @@
   <% end %>
 
 </div>
+
+<div>
+  <p>コメント件数:<%= @spot.post_comments.count %></p>
+  <% @spot.post_comments.each do |post_comment| %>
+    <%= post_comment.user.name %>
+    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+    <% if post_comment.user == current_user %>
+      <%= link_to "削除", spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+    <% end %>
+  <% end %>
+</div>
+
+<div>
+  <%= form_with model: [@spot, @post_comment] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメント" %>
+    <%= f.submit "送信" %>
+  <% end %>
+</div>
