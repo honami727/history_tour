@@ -5,6 +5,7 @@ class SpotsController < ApplicationController
   
   def create
     @spot = Spot.new(spot_params)
+    @spot.user_id = current_user.id
     if @spot.save
       flash[:notice] = "投稿に成功しました!"
       redirect_to spot_path(@spot.id)

@@ -1,0 +1,17 @@
+<h1>ユーザー詳細</h1>
+
+<div>
+    <h3><%= @user.name %></h3>
+</div>
+
+<% @spots.each do |spot| %>
+
+<div>
+    <p>人物:<%= spot.person %></p>
+    
+    <p>場所:<%= spot.address %></p>
+    
+    <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
+</div>
+
+<% end %>

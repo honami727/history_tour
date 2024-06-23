@@ -2,13 +2,12 @@
 
 <% @spots.each do |spot| %>
 
-  <p>人物</p>
-  <span><%= spot.person %></span>
-  
-  <p>場所</p>
-  <span><%= spot.address %></span>
+  <p>ユーザー:<%= spot.user.name %></p>
 
-  <p>タイトル</p>
-  <span><%= link_to spot.title, spot_path(spot.id) %></span>
+  <p>人物:<%= spot.person %></p>
+  
+  <p>場所:<%= spot.address %></p>
+
+  <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
 
 <% end %>

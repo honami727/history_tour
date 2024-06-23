@@ -1,16 +1,22 @@
 <h1>投稿詳細</h1>
 
-<h2>人物</h2>
-<p><%= @spot.person %></p>
+<div>
 
-<h2>場所</h2>
-<p><%= @spot.address %></p>
+  <p>ユーザー:<%= @spot.user.name %></p>
 
-<h2>タイトル</h2>
-<p><%= @spot.title %></p>
+  <p>人物:<%= @spot.person %></p>
 
-<h2>本文</h2>
-<p><%= @spot.body %></p>
+  <p>場所:<%= @spot.address %></p>
 
-<%= link_to "編集", edit_spot_path(@spot.id) %>
-<%= link_to "削除", spot_path(@spot.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+  <p>タイトル:<%= @spot.title %></p>
+
+  <p>説明:<%= @spot.body %></p>
+
+  <p>投稿日:<%= @spot.created_at.strftime('%Y/%m/%d') %></p>
+
+  <% if @spot.user == current_user %>
+    <%= link_to "編集", edit_spot_path(@spot.id) %>
+    <%= link_to "削除", spot_path(@spot.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+  <% end %>
+
+</div>
