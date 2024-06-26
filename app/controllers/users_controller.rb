@@ -2,7 +2,7 @@ class UsersController < ApplicationController
     
     def show
         @user = User.find(params[:id])
-        @spots = @user.spots
+        @spots = @user.spots.page(params[:page])
     end
     
     def edit

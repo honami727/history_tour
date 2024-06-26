@@ -13,3 +13,5 @@
   <p><%= link_to "#{spot.post_comments.count} コメント", spot_path(spot.id) %></p>
 
 <% end %>
+
+<%= paginate @spots %>
