@@ -1,17 +1,33 @@
-<h1>投稿一覧</h1>
 
-<% @spots.each do |spot| %>
 
-  <p>ユーザー:<%= spot.user.name %></p>
-
-  <p>人物:<%= spot.person %></p>
+<div class="card-list-container py-5">
+  <% @spots.each do |spot| %>
   
-  <p>場所:<%= spot.address %></p>
+  <div class="card w-50 mx-auto mt-4 shadow-lg">
+    <div class="card-body">
+      <div class="row">
 
-  <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
+      <table class="table table-striped">
+
+        <p>投稿ユーザー画像:<%= image_tag 'no_image.jpg' %></p>
+
+        <p>ユーザー:<%= spot.user.name %></p>
+
+        <p>人物:<%= spot.person %></p>
   
-  <p><%= link_to "#{spot.post_comments.count} コメント", spot_path(spot.id) %></p>
+        <p>場所:<%= spot.address %></p>
 
-<% end %>
+        <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
+        
+        <p><%= image_tag spot.get_image %></p>
+  
+        <p><%= link_to "#{spot.post_comments.count} コメント", spot_path(spot.id) %></p>
+  
+      </table>
+      </div>
+    </div>
+　</div>
+  <% end %>
 
-<%= paginate @spots %>
+  <%= paginate @spots %>
+</div>
