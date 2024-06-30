@@ -1,6 +1,8 @@
 <h1>投稿詳細</h1>
 <table>
 <div>
+  <p>投稿ユーザー画像:<%= image_tag @spot.user.get_profile_image(100,100) %></p>
+  
   <p>ユーザー:<%= @spot.user.name %></p>
 
   <p>人物:<%= @spot.person %></p>
@@ -9,7 +11,7 @@
 
   <p>タイトル:<%= @spot.title %></p>
   
-  <p><%= image_tag @spot.image, size: "300x300" %></p>
+  <p><%= image_tag @spot.get_image %></p>
 
   <p>説明:<%= @spot.body %></p>
 
@@ -37,6 +39,7 @@
 <div>
   <p>コメント件数:<%= @spot.post_comments.count %></p>
   <% @spot.post_comments.each do |post_comment| %>
+    <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
     <%= post_comment.user.name %>
     <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
     <% if post_comment.user == current_user %>

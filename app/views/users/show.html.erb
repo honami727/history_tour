@@ -1,6 +1,7 @@
 <h1>ユーザー詳細</h1>
 
 <div>
+    <%= image_tag @user.get_profile_image(100,100) %>
     <h3><%= @user.name %></h3>
     <h3><%= @user.introduction %></h3>
     <% if @user == current_user %>
@@ -16,6 +17,12 @@
     <p>場所:<%= spot.address %></p>
     
     <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
+    
+    <p>
+        <%= link_to spot_path(spot.id) do %>
+          <%= image_tag spot.get_image %>
+        <% end %>
+    </p>
     
     <p><%= link_to "#{spot.post_comments.count} コメント", spot_path(spot.id) %></p>
 </div>

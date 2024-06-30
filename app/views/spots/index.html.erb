@@ -9,7 +9,7 @@
 
       <table class="table table-striped">
 
-        <p>投稿ユーザー画像:<%= image_tag 'no_image.jpg' %></p>
+        <p>投稿ユーザー画像:<%= image_tag spot.user.get_profile_image(100,100)  %></p>
 
         <p>ユーザー:<%= spot.user.name %></p>
 
@@ -19,7 +19,11 @@
 
         <p>タイトル:<%= link_to spot.title, spot_path(spot.id) %></p>
         
-        <p><%= image_tag spot.get_image %></p>
+        <p>
+          <%= link_to spot_path(spot.id) do %>
+            <%= image_tag spot.get_image %>
+          <% end %>
+        </p>
   
         <p><%= link_to "#{spot.post_comments.count} コメント", spot_path(spot.id) %></p>
   
