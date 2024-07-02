@@ -1,4 +1,4 @@
-class FavoritesController < ApplicationController
+class Public::FavoritesController < ApplicationController
     
     def create
         spot = Spot.find(params[:spot_id])

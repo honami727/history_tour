@@ -1,4 +1,4 @@
-class SpotsController < ApplicationController
+class Public::SpotsController < ApplicationController
   def new
     @spot = Spot.new
   end
