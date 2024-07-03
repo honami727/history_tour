@@ -16,7 +16,21 @@ class Public::SpotsController < ApplicationController
   end
 
   def index
-    @spots = Spot.page(params[:page])
+    @spots = Spot.all.page(params[:page])
+    
+    if params[:word].present?
+      if params[:method] == "perfect"
+        @spots = @spots.where("title LIKE ? or person LIKE ?", "#{params[:word]}", "#{params[:word]}")
+      else
+        @spots = @spots.where("title LIKE ? or person LIKE ?", "%#{params[:word]}%", "%#{params[:word]}%")
+      end
+      
+      if @spots.count > 0
+        flash.now[:notice] = "#{@spots.count}件見つかりました。"
+      else
+        flash.now[:alert] = "見つかりませんでした。"
+      end
+    end
   end
 
   def show
@@ -29,25 +43,21 @@ class Public::SpotsController < ApplicationController
   end
   
   def update
-    spot = Spot.find(params[:id])
-    spot.update(spot_params)
-    redirect_to spot_path(spot.id)
+    @spot = Spot.find(params[:id])
+    @spot.user_id = current_user.id
+    if @spot.update(spot_params)
+      flash[:notice] = "更新に成功しました!"
+      redirect_to spot_path(@spot.id)
+    else
+      flash.now[:notice] = "更新に失敗しました"
+      render :u
+    end
   end
   
   def destroy
     spot = Spot.find(params[:id])
     spot.destroy
-    redirect_to '/spots'
-  end
-  
-  def search
-    seach_word = params[:word]
-    @spots = Spot.where("title LIKE ? or person LIKE ?", "%#{seach_word}%", "%#{seach_word}%")
-    if @spots.count > 0
-      flash.now[:notice] = "#{@spots.count}件見つかりました。"
-    else
-      flash.now[:alert] = "#見つかりませんでした。"
-    end
+    redirect_to spots_path
   end
   
   private
