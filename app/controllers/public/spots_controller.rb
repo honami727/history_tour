@@ -40,6 +40,16 @@ class Public::SpotsController < ApplicationController
     redirect_to '/spots'
   end
   
+  def search
+    seach_word = params[:word]
+    @spots = Spot.where("title LIKE ? or person LIKE ?", "%#{seach_word}%", "%#{seach_word}%")
+    if @spots.count > 0
+      flash.now[:notice] = "#{@spots.count}件見つかりました。"
+    else
+      flash.now[:alert] = "#見つかりませんでした。"
+    end
+  end
+  
   private
   
   def spot_params

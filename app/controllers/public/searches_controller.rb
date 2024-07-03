@@ -3,12 +3,12 @@ class Public::SearchesController < ApplicationController
     before_action :authenticate_user!
     
     def search
-        @model = params[:model]
-        @content = params[:content]
-      if @model == "User"
-        @users = User.looks(params[:search], params[:content])
+      seach_word = params[:word]
+      @spots = Spot.where("title LIKE ? or person LIKE ?", "%#{seach_word}%", "%#{seach_word}%")
+      if @spots.count > 0
+        flash.now[:notice] = "#{@spots.count}件見つかりました。"
       else
-        @spots = Spot.looks(params[:search], params[:content])
+        flash.now[:alert] = "#見つかりませんでした。"
       end
     end
     

@@ -9,6 +9,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 <body>
+    <span>History Tour</span>
     <% if admin_signed_in? %>
       <div class="text-right">
           <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
