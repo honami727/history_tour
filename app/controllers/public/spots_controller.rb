@@ -16,21 +16,26 @@ class Public::SpotsController < ApplicationController
   end
 
   def index
-    @spots = Spot.all.page(params[:page])
-    
+    @spots = Spot.all
+    search_flug = false
     if params[:word].present?
       if params[:method] == "perfect"
         @spots = @spots.where("title LIKE ? or person LIKE ?", "#{params[:word]}", "#{params[:word]}")
       else
         @spots = @spots.where("title LIKE ? or person LIKE ?", "%#{params[:word]}%", "%#{params[:word]}%")
       end
-      
-      if @spots.count > 0
-        flash.now[:notice] = "#{@spots.count}件見つかりました。"
-      else
-        flash.now[:alert] = "見つかりませんでした。"
-      end
+      search_flug = true
     end
+    if params[:category_id].present?
+      @spots = @spots.where(category_id: params[:category_id])
+      search_flug = true
+    end
+    if search_flug && @spots.count > 0
+      flash.now[:notice] = "#{@spots.count}件見つかりました。"
+    elsif search_flug
+      flash.now[:alert] = "見つかりませんでした。"
+    end
+    @spots = @spots.page(params[:page])
   end
 
   def show
@@ -50,7 +55,7 @@ class Public::SpotsController < ApplicationController
       redirect_to spot_path(@spot.id)
     else
       flash.now[:notice] = "更新に失敗しました"
-      render :u
+      render :edit
     end
   end
   
@@ -63,7 +68,7 @@ class Public::SpotsController < ApplicationController
   private
   
   def spot_params
-    params.require(:spot).permit(:person, :address, :title, :image, :body)
+    params.require(:spot).permit(:person, :address, :title, :image, :body, :category_id)
   end
   
 end

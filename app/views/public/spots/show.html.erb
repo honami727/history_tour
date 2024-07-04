@@ -20,6 +20,10 @@
               <p>【<%= @spot.person %>】</p>
 
               <p>場所:<%= @spot.address %></p>
+              
+              <% if @spot.category.present? %>
+　　　　        <%= link_to @spot.category.name,tagsearches_search_path(content:@spot.category) %>
+　　          <% end %>
 
               <h3 class="mb-0"><%= @spot.title %></h3>
   
@@ -37,22 +41,21 @@
               <% if @spot.favorited_by?(current_user) %>
                 <p>
                   <%= link_to spot_favorite_path(@spot), method: :delete do %>
-                    ❤︎<%= @spot.favorites.count %> いいね
+                    <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
                   <% end %>
                 </p>
               <% else %>
                 <p>
                   <%= link_to spot_favorite_path(@spot), method: :post do %>
-                    ❤<%= @spot.favorites.count %> いいね
+                    <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
                   <% end %>
                 </p>
               <% end %>
             </div>
 
             <div>
-              <p>コメント件数:<%= @spot.post_comments.count %></p>
+              <p><i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
               <% @spot.post_comments.each do |post_comment| %>
-                <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
                 <%= post_comment.user.name %>
                 <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
                 <% if post_comment.user == current_user %>
@@ -66,7 +69,7 @@
       </div>
       <div class="text-right">
         <%= form_with model: [@spot, @post_comment] do |f| %>
-          <%= f.text_area :comment, rows: '3', placeholder: "コメント" %>
+          <%= f.text_area :comment, rows: '3', placeholder: "comment" %>
           <%= f.submit "送信", class: 'btn btn-secondary' %>
         <% end %>
       </div>

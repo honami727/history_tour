@@ -2,6 +2,7 @@ class Spot < ApplicationRecord
     
     has_one_attached :image
     belongs_to :user
+    belongs_to :category
     has_many :post_comments, dependent: :destroy
     has_many :favorites, dependent: :destroy
     
@@ -10,6 +11,7 @@ class Spot < ApplicationRecord
     validates :title, presence: true
     validates :image, presence: true
     validates :body, presence: true
+    validates :category, presence: true
     
     def get_image
         unless image.attached?

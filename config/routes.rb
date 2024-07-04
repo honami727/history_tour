@@ -4,8 +4,10 @@ Rails.application.routes.draw do
     sessions: 'admin/sessions'
   }
   namespace :admin do
+    root to: 'dashboards#index'
     get 'dashboards', to: 'dashboards#index'
     resources :users, only: [:destroy]
+    resources :categories
   end
   scope module: :public do
     devise_for :users
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :edit, :update]
     root to: 'homes#top'
     get '/home/about' => 'homes#about', as: "about"
+    get 'tagsearches/search', to: 'tagsearches#search'
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

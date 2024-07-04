@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+
+
+    <%= form_with(model: category, url: url) do |f| %>
+      <% if category.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+    
+          <ul>
+            <% category.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="mb-2">
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+    
+      <div class="actions">
+        <%= f.submit class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

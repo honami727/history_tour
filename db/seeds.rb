@@ -7,6 +7,16 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Admin.create!(
-   email: 'admin@admin',
-   password: 'testtest'
+  email: 'admin@admin',
+  password: 'testtest'
 )
+
+category_names = %w(
+  カテゴリー1
+  カテゴリー2
+  カテゴリー3
+)
+
+category_names.each do |name|
+  Category.create!(name: name)
+end

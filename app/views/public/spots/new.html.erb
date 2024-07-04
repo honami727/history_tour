@@ -32,6 +32,10 @@
             <%= f.text_field :address, placeholder: "場所", class: "form-control" %>
           </div>
           
+          <div class="form-group pt-4 pb-3">
+            <%= f.collection_select :category_id, Category.all, :id, :name, { include_blank: "--時代カテゴリー--" }, { class: "form-control" } %>
+          </div>
+          
           <div class="form-group">
             <%= f.file_field :image, accept: "image/*" %>
           </div>
