@@ -5,12 +5,7 @@
   
   <main>
     <p id="notice"></p>
-    <!--
-    <div class="d-flex justify-content-center mb-2">
-        <%#= render "public/shared/search" %>
-        <%#= render "public/tagsearches/tagsearch" %>
-    </div>
-    -->
+
     <div class="d-flex justify-content-center mb-2">
       <%= form_with url: spots_path, method: :get do |f| %>
         <%= f.search_field :word, placeholder: "keywordで検索", value: params[:word] %>
@@ -23,30 +18,39 @@
     <div class="album py-5 bg-body-tertiary">
       <div class="container">
   
-      <div class="row-mb-2">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <% @spots.each do |spot| %>
-        <div class="col-md-6">
-          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-primary-emphasis"><%= image_tag spot.user.get_profile_image(100,100), class:"rounded-circle mx-auto" %><%= spot.user.name %></strong>
-              <h3 class="mb-0"><%= link_to spot.title, spot_path(spot.id) %></h3>
-              <div class="mb-1 text-body-secondary">
-                【<%= spot.person %>】
-                <p>場所:<%= spot.address %></p>
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-primary-emphasis"><%= image_tag spot.user.get_profile_image(100,100), class:"rounded-circle mx-auto" %><%= spot.user.name %></strong>
+                </div>
               </div>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-              <%= link_to spot_path(spot.id) do %>
-                <%= image_tag spot.get_image, class: "img-fluid", size: "180x150" %>
-              <% end %>
+              <h3 class="card-title"><%= link_to spot.title, spot_path(spot.id) %></h3>
+              <p class="card-text">【<%= spot.person %>】</p>
+              <p class="card-text">場所:<%= spot.address %></p>
+              <% if spot.category.present? %>
+　　　　        <p class="card-text"><%= link_to spot.category.name,tagsearches_search_path(content:spot.category) %></p>
+　　          <% end %>
+　　          
+            <%= link_to spot_path(spot.id) do %>
+              <%= image_tag spot.get_image, class: "img-fluid", size: "200x200" %>
+            <% end %>
+            <div class ="d-flex justify-content-between align-items-center">
+　　          <div class="group">
+　　            <span>
+                  <i class="fa-regular fa-comment"></i><%= spot.post_comments.count %>
+                  <i class="fa-solid fa-heart"></i>︎<%= spot.favorites.count %>
+                </span>
+　　          </div>
+　　          <small class="text-body-secondary"><%= spot.created_at.strftime('%Y/%m/%d') %></small>
             </div>
           </div>
-          <span>
-            <i class="fa-regular fa-comment"></i><%= link_to "#{spot.post_comments.count}", spot_path(spot.id) %>
-            <i class="fa-solid fa-heart"></i><%= link_to "#{spot.favorites.count}", spot_path(spot.id) %>
-          </span>
         </div>
       </div>
+      
       <% end %>
 
       <%= paginate @spots %>

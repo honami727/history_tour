@@ -15,15 +15,17 @@
             </div>
             <div class="col-10">
   
-              <strong><%= @spot.user.name %></strong>
+              <strong>
+                  <%= link_to @spot.user.name, user_path %>
+              </strong>
 
               <p>【<%= @spot.person %>】</p>
 
               <p>場所:<%= @spot.address %></p>
               
-              <% if @spot.category.present? %>
-　　　　        <%= link_to @spot.category.name,tagsearches_search_path(content:@spot.category) %>
-　　          <% end %>
+                <% if @spot.category.present? %>
+　　　　          <p><%= link_to @spot.category.name,tagsearches_search_path(content:@spot.category) %></p>
+　　            <% end %>
 
               <h3 class="mb-0"><%= @spot.title %></h3>
   
@@ -31,37 +33,43 @@
 
               <p><%= @spot.body %></p>
 
-              <p>投稿日:<%= @spot.created_at.strftime('%Y/%m/%d') %></p>
-
               <% if @spot.user == current_user %>
-                <%= link_to "編集", edit_spot_path(@spot.id) %>
-                <%= link_to "削除", spot_path(@spot.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
-              <% end %>
-
-              <% if @spot.favorited_by?(current_user) %>
-                <p>
-                  <%= link_to spot_favorite_path(@spot), method: :delete do %>
-                    <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
-                  <% end %>
-                </p>
-              <% else %>
-                <p>
-                  <%= link_to spot_favorite_path(@spot), method: :post do %>
-                    <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
-                  <% end %>
-                </p>
-              <% end %>
-            </div>
-
-            <div>
-              <p><i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
-              <% @spot.post_comments.each do |post_comment| %>
-                <%= post_comment.user.name %>
-                <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-                <% if post_comment.user == current_user %>
-                  <%= link_to "削除", spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+                <%= link_to edit_spot_path(@spot.id), class:"btn btn-outline-info" do %>
+                  <i class="fa-solid fa-pen"></i>
+                <% end %>
+                <%= link_to spot_path(@spot.id), method: :delete, class:"btn btn-outline-danger", "data-confirm" => "本当に削除しますか？" do %>
+                  <i class="fa-solid fa-trash-can"></i>
                 <% end %>
               <% end %>
+              <small class="text-body-secondary"><p><%= @spot.created_at.strftime('%Y/%m/%d') %></p></small>
+
+              <div class ="d-flex justify-content-between align-items-center">
+　　            <div class="group">
+　　              <span>
+                    <% if @spot.favorited_by?(current_user) %>
+                      <%= link_to spot_favorite_path(@spot), method: :delete do %>
+                        <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to spot_favorite_path(@spot), method: :post do %>
+                        <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
+                      <% end %>
+                    <% end %>
+
+                    <i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
+                    <% @spot.post_comments.each do |post_comment| %>
+                      <%= post_comment.user.name %>
+                      <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+                      <% if post_comment.user == current_user %>
+                        <%= link_to spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                          <i class="fa-solid fa-trash-can"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </span>
+　　            </div>
+　　          </div>
+　　          </div>
               
             </div>
           </div>
@@ -70,7 +78,7 @@
       <div class="text-right">
         <%= form_with model: [@spot, @post_comment] do |f| %>
           <%= f.text_area :comment, rows: '3', placeholder: "comment" %>
-          <%= f.submit "送信", class: 'btn btn-secondary' %>
+          <%= f.submit "Send", class: 'btn btn-secondary btn-sm' %>
         <% end %>
       </div>
     </div>

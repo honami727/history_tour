@@ -29,19 +29,21 @@
           
           <div class="text-center">
             <% if @user == current_user %>
-              <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+              <%= link_to edit_user_path(@user), class:"btn btn-outline-info btn-block" do %>
+                <i class="fa-solid fa-user-gear"></i>
+              <% end %>
             <% end %>
           </div>
         </div>
         
         <div class="col-lg-8 mt-4">
-          <h2 class="mb-4 text-center">投稿記事一覧</h2>
+          <h2 class="mb-4 text-center">Posts</h2>
           <div class="reports">
            <% @spots.each do |spot| %>
              <div class="spot_report text-center mb-4">
                <%= link_to spot.title, spot_path(spot.id) %>
                <%= link_to spot_path(spot.id) do %>
-                    <div class="img"><%= image_tag spot.get_image, size: "150x110" %></div>
+                    <div class="img"><%= image_tag spot.get_image, size: "150x150" %></div>
                 <% end %>
              </div>
             <% end %>
