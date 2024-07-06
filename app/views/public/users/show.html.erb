@@ -39,7 +39,7 @@
         <div class="col-lg-8 mt-4">
           <h2 class="mb-4 text-center">Posts</h2>
           <div class="reports">
-           <% @spots.each do |spot| %>
+            <% @spots.each do |spot| %>
              <div class="spot_report text-center mb-4">
                <%= link_to spot.title, spot_path(spot.id) %>
                <%= link_to spot_path(spot.id) do %>
@@ -47,11 +47,9 @@
                 <% end %>
              </div>
             <% end %>
-
-
-          <%= paginate @spots %>
+            <%= paginate @spots %>
+          </div>
         </div>
-      </div>
     </div>
   </main>
 </body>

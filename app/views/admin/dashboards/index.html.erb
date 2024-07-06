@@ -1,10 +1,35 @@
-<h1>全ユーザー一覧</h1>
+<head></head>
+<body>
+  
+<header></header>
+  <main>
+    <p id="notice"></p>
 
-<ul>
-    <% @users.each do |user| %>
-      <li>
-          <%= user.name %> - <%= user.email %>
-          <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除しますか？'} %>
-      </li>
-    <% end %>
-</ul>
+    <h1 class="text-center">Users List</h1>
+  
+    <div class="d-flex justify-content-center mb-2">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <% @users.each do |user| %>
+          
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td></td>
+              <td><%= link_to 'Delete', admin_user_path(@users), method: :delete, data: { confirm: 'Are you sure？'} %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+  </main>
