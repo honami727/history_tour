@@ -1,12 +1,45 @@
-<div class="serch_form" >
-  <table align="center">
-    <tr>
-      <div class="serch_form">
-      <%= form_with url: tagsearches_search_path,method: :get, local: true do |f| %>
-      <td><%= f.text_field :content %></td>
-      <td><%= f.submit'タグ検索' %></td>
-      <% end %>
-      </div>
-    </tr> 
-  </table>  
-</div>
+<head></head>
+<body>
+  
+<header></header>
+  <main>
+
+    <div class="serch_form" >
+      <table align="center">
+        <tr>
+          <div class="serch_form">
+          <%= form_with url: tagsearches_search_path,method: :get, local: true do |f| %>
+          <td><%= f.text_field :content %></td>
+          <td><%= f.submit'タグ検索' %></td>
+          <% end %>
+          </div>
+        </tr> 
+      </table>  
+    </div>
+    <div class="tag">
+      <table align="center">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>User</th>
+            <th>Title</th>
+            <th></th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <% @tagsearces.each do |tagsearch| %>
+            <tr>
+              <td><%= tagsearch.name %></td>
+              <td><%= user.name %></td>
+              <td><%= spot.name %></td>
+              <td><%= image_tag spot.get_image, class: "img-fluid", class: "img", size: "100x100" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  
+  </main>
+</body>
+

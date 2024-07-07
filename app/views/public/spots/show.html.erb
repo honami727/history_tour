@@ -18,7 +18,7 @@
           <p class="card-text">【<%= @spot.person %>】</p>
           <p class="card-text">場所:<%= @spot.address %></p>
           <% if @spot.category.present? %>
-　　　　    <p class="card-text"><%= link_to @spot.category.name,tagsearches_search_path(content:@spot.category) %></p>
+　　　　    <p class="card-text"><%= link_to @spot.category.name,tagsearches_search_path(category_id: @spot.category) %></p>
 　　      <% end %>
 　　      <table class="table">
 　　        <thead>
@@ -40,34 +40,37 @@
                 <% end %>
               <% end %>
               <small class="text-body-secondary"><p><%= @spot.created_at.strftime('%Y/%m/%d') %></p></small>
-
-              <div class ="d-flex justify-content-between align-items-center">
-　　            <div class="group">
-　　              <span>
-                    <% if @spot.favorited_by?(current_user) %>
-                      <%= link_to spot_favorite_path(@spot), method: :delete do %>
-                        <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
-                      <% end %>
-                    <% else %>
-                      <%= link_to spot_favorite_path(@spot), method: :post do %>
-                        <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
-                      <% end %>
+            </div>
+            <div class="col-6">
+　　          <div class="group">
+　　            <span>
+                  <% if @spot.favorited_by?(current_user) %>
+                    <%= link_to spot_favorite_path(@spot), method: :delete do %>
+                     <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
+                     <% end %>
+                  <% else %>
+                    <%= link_to spot_favorite_path(@spot), method: :post do %>
+                      <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
                     <% end %>
-
-                    <i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
-                    <% @spot.post_comments.each do |post_comment| %>
-                      <%= post_comment.user.name %>
-                      <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+                  <% end %>
+                  <i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
+                  <% @spot.post_comments.reverse.take(3).each do |post_comment| %>
+                  <table>
+                    <td>
+                      <%= post_comment.user.name %>:
+                      <%= post_comment.comment %>
+                      <small class="text-body-secondary"><%= post_comment.created_at.strftime('%Y/%m/%d') %></small>
                       <% if post_comment.user == current_user %>
-                        <%= link_to spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                        <%= link_to spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "Are you sure？" do %>
                           <i class="fa-solid fa-trash-can"></i>
                         <% end %>
                       <% end %>
-                    <% end %>
-                  </span>
-　　            </div>
+                    </td>
+                  </table>
+                  <% end %>
+                </span>
 　　          </div>
-            </div>
+　　        </div>
           </div>
         </div>
       </div>

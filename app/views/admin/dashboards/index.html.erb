@@ -13,19 +13,16 @@
           <tr>
             <th>User name</th>
             <th>Email</th>
-            <th>Status</th>
             <th></th>
           </tr>
         </thead>
         
         <tbody>
           <% @users.each do |user| %>
-          
             <tr>
               <td><%= user.name %></td>
               <td><%= user.email %></td>
-              <td></td>
-              <td><%= link_to 'Delete', admin_user_path(@users), method: :delete, data: { confirm: 'Are you sure？'} %></td>
+              <td><%= link_to 'Delete', admin_user_path(@users), method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure？'} %></td>
             </tr>
           <% end %>
         </tbody>

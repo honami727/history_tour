@@ -1,0 +1,59 @@
+<body>
+  
+<header></header>
+  
+  <main>
+    <p id="notice"></p>
+    <div class="d-flex justify-content-center mb-2">
+      <%= form_with url: spots_path, method: :get do |f| %>
+        <%= f.search_field :word, placeholder: "keywordで検索", value: params[:word] %>
+        <%= f.select :method, options_for_select({"完全一致" => "perfect", "部分一致" => "partial"}, selected: params[:method]) %>
+        <%= f.collection_select :category_id, Category.all, :id, :name, { include_blank: "--カテゴリーで検索--", selected: params[:category_id] }, {} %>
+        <%= f.submit "この条件で検索する" %>
+      <% end %>
+    </div>
+
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+  
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <% spots.each do |spot| %>
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-primary-emphasis"><%= image_tag spot.user.get_profile_image(100,100), class:"mt-3 rounded-circle" %><%= spot.user.name %></strong>
+                </div>
+              </div>
+              <h3 class="card-title"><%= link_to spot.title, spot_path(spot.id) %></h3>
+              <p class="card-text">【<%= spot.person %>】</p>
+              <p class="card-text">場所:<%= spot.address %></p>
+              <% if spot.category.present? %>
+　　　　        <p class="card-text"><%= link_to spot.category.name,tagsearches_search_path(category_id: spot.category) %></p>
+　　          <% end %>
+　　          
+            <%= link_to spot_path(spot.id) do %>
+              <%= image_tag spot.get_image, class: "img-fluid", class: "img", size: "200x200" %>
+            <% end %>
+            <div class ="d-flex justify-content-between align-items-center">
+　　          <div class="group">
+　　            <span>
+                  <i class="fa-regular fa-comment"></i><%= spot.post_comments.count %>
+                  <i class="fa-solid fa-heart"></i>︎<%= spot.favorites.count %>
+                </span>
+　　          </div>
+　　          <small class="text-body-secondary"><%= spot.created_at.strftime('%Y/%m/%d') %></small>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <% end %>
+
+      </div>
+    </div>
+    
+  </main>
+  <%= paginate spots %>
+</body>
