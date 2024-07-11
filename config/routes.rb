@@ -15,7 +15,11 @@ Rails.application.routes.draw do
       resource :favorite, only: [:create, :destroy]
       resources :post_comments, only: [:create, :destroy]
     end
-    resources :users, only: [:show, :edit, :update]
+    resources :users, only: [:show, :edit, :update] do
+      member do
+        get :favorites
+      end
+    end
     root to: 'homes#top'
     get '/home/about' => 'homes#about', as: "about"
     get 'tagsearches/search', to: 'tagsearches#search'

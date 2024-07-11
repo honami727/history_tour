@@ -21,6 +21,13 @@ class Public::UsersController < ApplicationController
         end
     end
     
+    def favorites
+        @user = User.find(params[:id])
+        favorites = Favorite.where(user_id: @user.id).pluck(:spot_id)
+        @favorite_spots = Spot.find(favorites)
+        @spot = Spot.find(params[:id])
+    end
+    
     private
   
     def user_params
@@ -32,6 +39,10 @@ class Public::UsersController < ApplicationController
       unless @user.id == current_user.id
         redirect_to user_path(current_user)
       end
+    end
+    
+    def set_user
+      @user = User.find(params[:id])
     end
     
 end
