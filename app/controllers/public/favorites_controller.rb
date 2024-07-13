@@ -13,5 +13,5 @@ class Public::FavoritesController < ApplicationController
         favorite.destroy
         redirect_to spot_path(spot)
     end
-    
+
 end

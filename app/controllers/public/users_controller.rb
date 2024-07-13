@@ -24,8 +24,10 @@ class Public::UsersController < ApplicationController
     def favorites
         @user = User.find(params[:id])
         favorites = Favorite.where(user_id: @user.id).pluck(:spot_id)
-        @favorite_spots = Spot.find(favorites)
+        @favorite_spots = Spot.where(id: favorites)
         @spot = Spot.find(params[:id])
+        page = params[:page] || 1
+        @favorite_spots = @favorite_spots.page(page)
     end
     
     private
