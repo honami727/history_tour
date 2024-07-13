@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       end
     end
     root to: 'homes#top'
+    post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
     get '/home/about' => 'homes#about', as: "about"
     get 'tagsearches/search', to: 'tagsearches#search'
   end
