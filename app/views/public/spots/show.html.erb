@@ -1,7 +1,6 @@
 <body>
-  <main>
+<main>
     <p id="notice"></p>
-  
     <div class="card-list-container py-5">
       <div class="card w-50 mx-auto mt-4 shadow-lg">
         <div class="card-body">
@@ -25,58 +24,57 @@
 　　        </thead>
 　　      </table> 
 　　    </div>
-　　      
-            <div class="col-10">
-              <% if @spot.user == current_user %>
-                <%= link_to edit_spot_path(@spot.id), class:"btn btn-outline-info" do %>
-                  <i class="fa-solid fa-pen"></i>
+        <div class="col-10">
+          <% if @spot.user == current_user %>
+            <%= link_to edit_spot_path(@spot.id), class:"btn btn-outline-info" do %>
+              <i class="fa-solid fa-pen"></i>
+            <% end %>
+            <%= link_to spot_path(@spot.id), method: :delete, class:"btn btn-outline-danger", "data-confirm" => "Are you sure？" do %>
+              <i class="fa-solid fa-trash-can"></i>
+            <% end %>
+          <% end %>
+          <small class="text-body-secondary"><p><%= @spot.created_at.strftime('%Y/%m/%d') %></p></small>
+        </div>
+        <div class="col-6">
+　　      <div class="group">
+　　        <span>
+              <% if @spot.favorited_by?(current_user) %>
+                <%= link_to spot_favorite_path(@spot), method: :delete do %>
+                  <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
                 <% end %>
-                <%= link_to spot_path(@spot.id), method: :delete, class:"btn btn-outline-danger", "data-confirm" => "本当に削除しますか？" do %>
-                  <i class="fa-solid fa-trash-can"></i>
+              <% else %>
+                <%= link_to spot_favorite_path(@spot), method: :post do %>
+                  <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
                 <% end %>
               <% end %>
-              <small class="text-body-secondary"><p><%= @spot.created_at.strftime('%Y/%m/%d') %></p></small>
-            </div>
-            <div class="col-6">
-　　          <div class="group">
-　　            <span>
-                  <% if @spot.favorited_by?(current_user) %>
-                    <%= link_to spot_favorite_path(@spot), method: :delete do %>
-                     <i class="fa-solid fa-heart"></i>︎<%= @spot.favorites.count %>
-                     <% end %>
-                  <% else %>
-                    <%= link_to spot_favorite_path(@spot), method: :post do %>
-                      <i class="fa-solid fa-heart"></i><%= @spot.favorites.count %>
-                    <% end %>
-                  <% end %>
-                  <i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
-                  <% @spot.post_comments.reverse.take(3).each do |post_comment| %>
-                  <table>
-                    <td>
-                      <%= post_comment.user.name %>:
-                      <%= post_comment.comment %>
-                      <small class="text-body-secondary"><%= post_comment.created_at.strftime('%Y/%m/%d') %></small>
-                      <% if post_comment.user == current_user %>
-                        <%= link_to spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "Are you sure？" do %>
-                          <i class="fa-solid fa-trash-can"></i>
-                        <% end %>
+              <i class="fa-regular fa-comment"></i>:<%= @spot.post_comments.count %></p>
+              <% @spot.post_comments.reverse.take(3).each do |post_comment| %>
+                <table>
+                  <td>
+                    <%= post_comment.user.name %>:
+                    <%= post_comment.comment %>
+                    <small class="text-body-secondary"><%= post_comment.created_at.strftime('%Y/%m/%d') %></small>
+                    <% if post_comment.user == current_user %>
+                      <%= link_to spot_post_comment_path(post_comment.spot, post_comment), method: :delete, "data-confirm" => "Are you sure？" do %>
+                        <i class="fa-solid fa-trash-can"></i>
                       <% end %>
-                    </td>
-                  </table>
-                  <% end %>
-                </span>
-　　          </div>
-　　        </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-        <%= form_with model: [@spot, @post_comment] do |f| %>
-          <%= f.text_area :comment, rows: '2', placeholder: "comment" %>
-          <%= f.submit "Send", class: 'btn btn-secondary btn-sm' %>
-        <% end %>
+                    <% end %>
+                  </td>
+                </table>
+              <% end %>
+            </span>
+　　      </div>
+　　    </div>
       </div>
     </div>
+  </div>
+  <div class="text-center">
+    <%= form_with model: [@spot, @post_comment] do |f| %>
+      <%= f.text_area :comment, rows: '2', placeholder: "comment" %>
+      <%= f.submit "Send", class: 'btn btn-secondary btn-sm' %>
+    <% end %>
+  </div>
+</div>
     
-  </main>
+</main>
 </body>

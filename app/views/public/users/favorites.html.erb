@@ -14,7 +14,7 @@
                       <strong class="d-inline-block mb-2 text-primary-emphasis"><%= image_tag spot.user.get_profile_image(100,100), class:"mt-3 rounded-circle" %><%= spot.user.name %></strong>
                     </div>
                   </div>
-                  <h3 class="card-title"><%= link_to spot.title, spot_path(@spot) %></h3>
+                  <h3 class="card-title"><%= link_to spot.title, spot_path %></h3>
                   <p class="card-text">【<%= spot.person %>】</p>
                   <p class="card-text">場所:<%= spot.address %></p>
                   <% if spot.category.present? %>

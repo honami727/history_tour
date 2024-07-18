@@ -1,4 +1,5 @@
 class Public::UsersController < ApplicationController
+  before_action :ensure_guest_user, only: [:edit]
     
     def show
         @user = User.find(params[:id])
@@ -25,7 +26,6 @@ class Public::UsersController < ApplicationController
         @user = User.find(params[:id])
         favorites = Favorite.where(user_id: @user.id).pluck(:spot_id)
         @favorite_spots = Spot.where(id: favorites)
-        @spot = Spot.find(params[:id])
         page = params[:page] || 1
         @favorite_spots = @favorite_spots.page(page)
     end
@@ -46,5 +46,12 @@ class Public::UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+    
+    def ensure_guest_user
+      @user = User.find(params[:id])
+      if @user.guest_user?
+        redirect_to user_path(current_user) , notice: "Guest users cannot transition to the profile editing screen."
+      end
+    end  
     
 end
