@@ -13,5 +13,10 @@ class Public::FavoritesController < ApplicationController
         favorite.destroy
         redirect_to spot_path(spot)
     end
+    
+    def show
+      @spot = Spot.find(params[:id])
+      @post_comment = PostComment.new
+    end
 
 end
